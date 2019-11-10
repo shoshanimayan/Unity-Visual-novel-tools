@@ -54,7 +54,7 @@ public class Dialogue
         //if do not want portrait to change timeToChange = 0
         s = (string)input["portraitTransitions"];
         portraitTransitions = new List<Portrait>();
-        string[] toGrabFrom = s.Replace("(", "").Replace(")", "").Replace(" ", "").Split(',');
+       string[] toGrabFrom = s.Replace("(", "").Replace(")", "").Replace(" ", "").Split(',');
         for (int i = 0; i < toGrabFrom.Length; i += 2)
         {
             portraitTransitions.Add(new Portrait(toGrabFrom[i], float.Parse(toGrabFrom[i + 1])));
