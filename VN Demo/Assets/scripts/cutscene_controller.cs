@@ -15,38 +15,27 @@ public class cutscene_controller : MonoBehaviour
     public Text textbox;
     public Image portrait;
     public Image background;
-    public Sprite frogNormal;
-    public Sprite frogAngry;
-    public Sprite frogDispleased;
+    public Sprite normal;
+    public Sprite angry;
+    public Sprite sad;
     public Sprite phoneOn;
     public Sprite PhoneOff;
     public float TyperDelay = 0.01f;
-    public AudioSource AS;
+    AudioSource AS;
     private Coroutine activeTyper, activeSpeaker, caller;
     public bool MakeSounds;
 
-   
 
 
     //sounds
     public AudioClip phone;
-    public AudioClip froggo;
-    public AudioClip J;
+    public AudioClip person1;
+    public AudioClip person2;
     AudioClip speakerAudio;
-
-    // level stuff to be activated at end of cutscene
-    //public AudioSource Game_AS; //audio source for game 
-    //public Canvas ui;
-
-
-
-
 
     void Awake()
     {
-       // fade = background.color;
-       // Game_AS.enabled = false;
-       // ui.enabled = false;
+      
         AS = GetComponent<AudioSource>();
         cursor = spawnDialogue;
         graph = new Dictionary<int, Dialogue>();
@@ -66,7 +55,6 @@ public class cutscene_controller : MonoBehaviour
     IEnumerator Typer(string input)
     {
         AS.volume = 1;
-        // Debug.Log(input.Substring(0, input.Length-1));
         for (int i = 0; i <= input.Length; i++)
         {
 
@@ -104,16 +92,13 @@ public class cutscene_controller : MonoBehaviour
     IEnumerator musicPlayer()
     {
         // if (caller != null) { speakerAudio = phone; }
-        if (graph[cursor].speaker == "Froggo") { speakerAudio = froggo; }
-        if (graph[cursor].speaker == "j" || graph[cursor].speaker == "J") { speakerAudio = J; }
+        if (graph[cursor].speaker == "p1") { speakerAudio = person1; }
+        if (graph[cursor].speaker == "p2") { speakerAudio = person2; }
         while (MakeSounds == true)
         {
-
             AS.PlayOneShot(speakerAudio);
             yield return new WaitForSeconds(speakerAudio.length);
         }
-        //activeSpeaker = null;
-
     }
 
     public void dialogueUpdate(string input)
@@ -128,8 +113,6 @@ public class cutscene_controller : MonoBehaviour
             StopCoroutine(activeSpeaker);
         }
         activeSpeaker = StartCoroutine(musicPlayer());
-
-        //  dialogueText.text = input;
     }
 
     void Update()
@@ -145,11 +128,7 @@ public class cutscene_controller : MonoBehaviour
                     {
                         speakerAudio = phone;
                         AS.PlayOneShot(speakerAudio);
-
                     }
-
-
-
                 }
 
             }
@@ -159,35 +138,31 @@ public class cutscene_controller : MonoBehaviour
                 if (caller != null)
                     StopCoroutine(caller); caller = null; cursor++;
 
-                //    AS.enabled = false;
+     
                 if (graph[cursor].speaker == "End") // end cutscene
                 {
-
                 Application.Quit();
-
-            }
+                }
                 else
                 { //change dialouge and image
-
                     Debug.Log(graph[cursor].speaker + ": " + graph[cursor].longText);
                     //textbox.text = graph[cursor].longText;
                     dialogueUpdate(graph[cursor].longText);
-                    if (graph[cursor].speaker == "Froggo")
+                    if (graph[cursor].speaker == "p1")
                     {
-
                         switch (graph[cursor].portraitTransitions[0].type)
                         {
                             case "Angry":
-                                portrait.sprite = frogAngry;
+                                portrait.sprite = angry;
                                 break;
                             default:
-                                portrait.sprite = frogNormal;
+                                portrait.sprite = normal;
                                 break;
 
                         }
 
                     }
-                    else if (graph[cursor].speaker == "j" || graph[cursor].speaker == "J")
+                    else if (graph[cursor].speaker == "p2" )
                     {
                         portrait.sprite = phoneOn;
                     }

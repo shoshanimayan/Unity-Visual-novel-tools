@@ -42,6 +42,7 @@ public class Dialogue
         //building options list
         int n = 0;
         options = new List<int>();
+        //options are formatted with "a#,#" with pound being the number to look for in the script for the option text, a being a delimeter, inside a string parenthesis 
         string s = (string)input["options"];
         foreach(string st in s.Replace("a", "").Split(','))
         {
