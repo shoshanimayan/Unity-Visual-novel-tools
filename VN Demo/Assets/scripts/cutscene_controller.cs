@@ -20,12 +20,17 @@ public class cutscene_controller : MonoBehaviour
     public Sprite sad;
     public Sprite phoneOn;
     public Sprite PhoneOff;
+    public Button b1;
+    public Button b2;
+    public Text b1Text;
+    public Text b2Text;
+
     public float TyperDelay = 0.01f;
     AudioSource AS;
     private Coroutine activeTyper, activeSpeaker, caller;
     public bool MakeSounds;
-
-
+    bool choiceMode;
+    bool click;
 
     //sounds
     public AudioClip phone;
@@ -33,9 +38,13 @@ public class cutscene_controller : MonoBehaviour
     public AudioClip person2;
     AudioClip speakerAudio;
 
+    void press1()   { cursor = 6; click = true; } 
+    void press2() {  cursor = graph[cursor].options[1] - 2; click = true;  }
+
     void Awake()
     {
-      
+        click = false;
+        choiceMode = false;
         AS = GetComponent<AudioSource>();
         cursor = spawnDialogue;
         graph = new Dictionary<int, Dialogue>();
@@ -47,9 +56,6 @@ public class cutscene_controller : MonoBehaviour
             graph[i] = new Dialogue(i, data[i]);
         }
     
-
-
-
     }
 
     IEnumerator Typer(string input)
@@ -117,7 +123,11 @@ public class cutscene_controller : MonoBehaviour
 
     void Update()
     {
-        
+        if (graph[cursor].speaker == "End") // end cutscene
+        {
+            Application.Quit();
+        }
+        //Debug.Log(cursor);
             if (cursor == 0)
             {
                 portrait.sprite = PhoneOff;
@@ -132,47 +142,46 @@ public class cutscene_controller : MonoBehaviour
                 }
 
             }
-            if (Input.anyKeyDown)
+        //if (Input.anyKeyDown)
+        //{
+        if (graph[cursor].options.Count == 1 ) { if (Input.anyKeyDown) { cursor=graph[cursor].defaultOption-2; click = true; } }
+        else {
+            b1Text.text = graph[graph[cursor].options[0]-2].shortText;
+            b2Text.text = graph[graph[cursor].options[1]-2].shortText;
+            b1.onClick.AddListener(press1);
+            b2.onClick.AddListener(press2);
+
+        }
+        if (click)
+        {
+            click = false;
+            if (speakerAudio == phone) { AS.Stop(); }
+            if (caller != null)
             {
-                if (speakerAudio == phone) { AS.Stop(); }
-                if (caller != null)
-                    StopCoroutine(caller); caller = null; cursor++;
-
-     
-                if (graph[cursor].speaker == "End") // end cutscene
-                {
-                Application.Quit();
-                }
-                else
-                { //change dialouge and image
-                    Debug.Log(graph[cursor].speaker + ": " + graph[cursor].longText);
-                    //textbox.text = graph[cursor].longText;
-                    dialogueUpdate(graph[cursor].longText);
-                    if (graph[cursor].speaker == "p1")
-                    {
-                        switch (graph[cursor].portraitTransitions[0].type)
-                        {
-                            case "Angry":
-                                portrait.sprite = angry;
-                                break;
-                            default:
-                                portrait.sprite = normal;
-                                break;
-
-                        }
-
-                    }
-                    else if (graph[cursor].speaker == "p2" )
-                    {
-                        portrait.sprite = phoneOn;
-                    }
-                    else { portrait.sprite = PhoneOff; }
-
-                }
-
+                StopCoroutine(caller); caller = null;
             }
-        
-        
+                Debug.Log(graph[cursor].speaker + ": " + graph[cursor].longText);
+                dialogueUpdate(graph[cursor].longText);
+                if (graph[cursor].speaker == "p1")
+                {
+                Debug.Log(graph[cursor].portraitTransitions[0].type);
+                    switch (graph[cursor].portraitTransitions[0].type)
+                    {
+                        case "Angry":
+                            portrait.sprite = angry;
+                            break;
+                        default:
+                            portrait.sprite = normal;
+                            break;
+                    }
+
+                }
+                else if (graph[cursor].speaker == "p2")
+                {
+                    portrait.sprite = phoneOn;
+                }
+                else { portrait.sprite = PhoneOff; }
+        }
     }
 
 }
