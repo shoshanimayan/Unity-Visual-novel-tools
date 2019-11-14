@@ -579,7 +579,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 874349458}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &874349458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -784,7 +795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -948,20 +959,20 @@ MonoBehaviour:
   textbox: {fileID: 645314881}
   portrait: {fileID: 1568695009}
   background: {fileID: 1265853893}
-  normal: {fileID: 0}
-  angry: {fileID: 0}
-  sad: {fileID: 0}
-  phoneOn: {fileID: 0}
-  PhoneOff: {fileID: 0}
+  normal: {fileID: 21300000, guid: d9f44721c40e5c248a9559810d89d2df, type: 3}
+  angry: {fileID: 21300000, guid: 4f98b8d0ca9c6144e98f35b88e70608d, type: 3}
+  sad: {fileID: 21300000, guid: 299bcc41449688b49bbd4b0c5ed62339, type: 3}
+  phoneOn: {fileID: 21300000, guid: 9ca7121f523dc2842823e799dfef9277, type: 3}
+  PhoneOff: {fileID: 21300000, guid: 0ac574e5b23cd76498374b918857f5b5, type: 3}
   b1: {fileID: 874349457}
   b2: {fileID: 896841975}
   b1Text: {fileID: 164040652}
   b2Text: {fileID: 1369922548}
   TyperDelay: 0
   MakeSounds: 0
-  phone: {fileID: 0}
-  person1: {fileID: 0}
-  person2: {fileID: 0}
+  phone: {fileID: 8300000, guid: 4d56037422fba4a4f9078510ce06479c, type: 3}
+  person1: {fileID: 8300000, guid: 6107f30e31c28b24da08777dd538c1d5, type: 3}
+  person2: {fileID: 8300000, guid: 6107f30e31c28b24da08777dd538c1d5, type: 3}
 --- !u!1 &1265853891
 GameObject:
   m_ObjectHideFlags: 0

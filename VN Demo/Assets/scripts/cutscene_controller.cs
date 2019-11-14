@@ -29,7 +29,7 @@ public class cutscene_controller : MonoBehaviour
     AudioSource AS;
     private Coroutine activeTyper, activeSpeaker, caller;
     public bool MakeSounds;
-    bool choiceMode;
+    int choice;
     bool click;
 
     //sounds
@@ -38,19 +38,18 @@ public class cutscene_controller : MonoBehaviour
     public AudioClip person2;
     AudioClip speakerAudio;
 
-    void press1()   { cursor = 6; click = true; } 
-    void press2() {  cursor = graph[cursor].options[1] - 2; click = true;  }
+    void press1()   { choice=0; } 
+    void press2() { choice = 1; }
 
     void Awake()
     {
         click = false;
-        choiceMode = false;
         AS = GetComponent<AudioSource>();
         cursor = spawnDialogue;
         graph = new Dictionary<int, Dialogue>();
         List<Dictionary<string, object>> data = CSVReader.Read(script);
         Debug.Log("lines read in: " + data.Count);
-
+        choice = -1;
         for (int i = 0; i < data.Count; ++i)
         {
             graph[i] = new Dialogue(i, data[i]);
@@ -123,11 +122,7 @@ public class cutscene_controller : MonoBehaviour
 
     void Update()
     {
-        if (graph[cursor].speaker == "End") // end cutscene
-        {
-            Application.Quit();
-        }
-        //Debug.Log(cursor);
+      
             if (cursor == 0)
             {
                 portrait.sprite = PhoneOff;
@@ -142,18 +137,26 @@ public class cutscene_controller : MonoBehaviour
                 }
 
             }
-        //if (Input.anyKeyDown)
-        //{
+       
         if (graph[cursor].options.Count == 1 ) { if (Input.anyKeyDown) { cursor=graph[cursor].defaultOption-2; click = true; } }
         else {
             b1Text.text = graph[graph[cursor].options[0]-2].shortText;
             b2Text.text = graph[graph[cursor].options[1]-2].shortText;
             b1.onClick.AddListener(press1);
             b2.onClick.AddListener(press2);
-
+            if (choice != -1) {
+                click = true;
+                cursor = cursor = graph[cursor].options[choice] - 2;
+                
+            }
         }
         if (click)
         {
+            if (graph[cursor].speaker == "End") // end cutscene
+            {
+                Application.Quit();
+            }
+            if (choice != -1) { choice = -1; }
             click = false;
             if (speakerAudio == phone) { AS.Stop(); }
             if (caller != null)
