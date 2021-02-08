@@ -12,7 +12,7 @@ includes:
 
 TODO: at some point I wantto go back and reimplement the data structure that contains all the dialouge options to be a stack or queue instead of a dictionary, the original idea of implementing the idctionary was so that you could potentially go backwards in the script, and the fact that this tool was built under time constraints of a game jam meant that we had to work fast and build a solution on the fly. however I havent found that I usually end up going backwards through dialouge in visula novels, and having the entire script stored throughout the entire game as objects could be space intense if the script text is to long, and that was just never a problem we had to consider when working with the smaller script texts of a game jam, and this problem could potentially be solved by using a stack or queue, and throughing out dialouge as it is no longer needed. 
 
-exasmples of use of tools:
+examples of use of tools:
 
 https://theavianlord.itch.io/lifeline
 https://github.com/timkashani/souptime
