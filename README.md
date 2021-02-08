@@ -4,7 +4,7 @@ my intention is to keep the original version of all these tools here so i can co
 
 includes:
 
-*CSVREADER.cs, scripts written in google spreadsheets can be converted to csvs, this program extracts all the relevant information as a dictionary
+*CSVREADER.cs, scripts written in google spreadsheets can be converted to csvs, this program extracts all the relevant information as a list of dictionary objects
 
 *Dialogue.cs, the basic structure for storing all the relevant info from the story script to be used in game 
 
